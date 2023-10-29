@@ -41,7 +41,7 @@ export const GET = async (request, { params }) => {
 
 export const POST = async (request) => {
     const taskData = await request.json();
-
+    // console.log(taskData)
     try {
         const newTask = new Tasks({
             ...taskData
