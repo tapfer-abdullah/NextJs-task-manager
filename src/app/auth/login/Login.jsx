@@ -1,6 +1,7 @@
 "use client";
 
 import { axiosHttp } from "@/helper/axiosHttp";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
@@ -9,6 +10,8 @@ const Login = () => {
     email: "",
     password: "",
   });
+
+  const router = useRouter();
 
   const handleLoginUser = (event) => {
     event.preventDefault();
@@ -28,6 +31,8 @@ const Login = () => {
               email: "",
               password: "",
             });
+            router.push("/");
+            window.location.reload();
           } else {
             toast.error(res.data.message);
           }

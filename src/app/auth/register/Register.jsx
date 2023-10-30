@@ -1,6 +1,7 @@
 "use client";
 
 import { axiosHttp } from "@/helper/axiosHttp";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
@@ -13,6 +14,8 @@ const Register = () => {
     imgURL: "",
     address: "",
   });
+
+  const router = useRouter();
 
   const handleAddUser = (event) => {
     event.preventDefault();
@@ -34,6 +37,7 @@ const Register = () => {
             imgURL: "",
             address: "",
           });
+          router.push("/auth/login");
         } else {
           toast.error("Failed to register!");
         }

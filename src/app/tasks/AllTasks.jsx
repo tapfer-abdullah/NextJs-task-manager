@@ -5,14 +5,20 @@ import React, { useEffect, useState } from "react";
 
 const AllTasks = () => {
   const [allTasks, setAllTasks] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    axiosHttp.get("/tasks").then((res) => setAllTasks(res.data));
+    setLoading(true);
+    axiosHttp.get("/tasks").then((res) => {
+      setAllTasks(res.data);
+      setLoading(false);
+    });
   }, []);
 
   return (
     <div className="my-5 min-h-[80vh]">
       <h3 className="text-xl font-semibold text-center my-5">All Tasks</h3>
+      {loading && <p className="text-center">Loading tasks.........</p>}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {allTasks.map((task) => (
           <div key={task._id}>
