@@ -1,6 +1,8 @@
 import { connectDB } from "@/helper/db";
 import { Users } from "@/models/users";
 import { NextResponse } from "next/server";
+// const bcrypt = require('bcrypt');
+import bcrypt from "bcrypt";
 
 connectDB();
 
@@ -19,6 +21,7 @@ export const GET = async (request) => {
 
 export const POST = async (request) => {
     const userData = await request.json();
+    userData.password = bcrypt.hashSync(userData.password, parseInt(process.env.BCRYPT_SALT));
 
     try {
         const newUser = new Users({ ...userData });
