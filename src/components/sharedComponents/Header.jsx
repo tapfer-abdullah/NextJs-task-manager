@@ -8,7 +8,6 @@ import { toast } from "react-toastify";
 
 const Header = () => {
   const { userData, setUserData } = useContext(AuthContext);
-  // console.log(userData);
 
   const handleLogout = () => {
     axiosHttp.get("/logout").then((res) => {
