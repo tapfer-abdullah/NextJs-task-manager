@@ -7,14 +7,15 @@ import React, { useContext } from "react";
 import { toast } from "react-toastify";
 
 const Header = () => {
-  const { userData, setUserData } = useContext(AuthContext);
+  const { userData, setUserData, setClick, click } = useContext(AuthContext);
 
   const handleLogout = () => {
     axiosHttp.get("/logout").then((res) => {
       if (res.data.status) {
-        setUserData({});
+        setClick(click + 1);
+        setUserData(null);
         toast.success("Logout successful!");
-        window.location.reload();
+        // window.location.reload();
       }
     });
   };

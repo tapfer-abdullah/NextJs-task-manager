@@ -1,15 +1,18 @@
 "use client";
 
+import { AuthContext } from "@/helper/AuthProvider";
 import { axiosHttp } from "@/helper/axiosHttp";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import addTaskImg from "../../assets/addTask.svg";
 
 const AddTask = () => {
+  const { userData } = useContext(AuthContext);
+  // console.log(userData);
   const [task, setTask] = useState({
-    userEmail: "aaaaaaaa@bk.com",
+    userEmail: userData?.email,
     description: "",
     title: "",
     status: "none",

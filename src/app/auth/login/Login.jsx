@@ -1,8 +1,9 @@
 "use client";
 
+import { AuthContext } from "@/helper/AuthProvider";
 import { axiosHttp } from "@/helper/axiosHttp";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
 
 const Login = () => {
@@ -10,6 +11,10 @@ const Login = () => {
     email: "",
     password: "",
   });
+
+  const [clickLoginBtn, setClickLoginBtn] = useState(false);
+
+  const { setClick, click } = useContext(AuthContext);
 
   const router = useRouter();
 
@@ -22,6 +27,7 @@ const Login = () => {
     }
 
     try {
+      setClickLoginBtn(true);
       axiosHttp
         .post("/auth", user)
         .then((res) => {
@@ -31,8 +37,10 @@ const Login = () => {
               email: "",
               password: "",
             });
+            setClick(click + 1);
             router.push("/");
-            window.location.reload();
+            setClickLoginBtn(false);
+            // window.location.reload();
           } else {
             toast.error(res.data.message);
           }
@@ -92,11 +100,11 @@ const Login = () => {
         </div>
 
         <div className="flex justify-center items-center gap-3 text-white text-lg font-semibold">
-          <button type="submit" className="bg-green-600 py-1 px-2 rounded-md">
-            Login
+          <button disabled={clickLoginBtn} type="submit" className={`bg-green-600 py-1 px-2 rounded-md`}>
+            {clickLoginBtn ? "Login..." : "Login"}
           </button>
           <span onClick={handleClear} className="bg-red-600 py-1 px-2 rounded-md hover:cursor-pointer">
-            Clear
+            Reset
           </span>
         </div>
       </form>

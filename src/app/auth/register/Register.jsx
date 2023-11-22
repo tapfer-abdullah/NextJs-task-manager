@@ -15,6 +15,8 @@ const Register = () => {
     address: "",
   });
 
+  const [clickRegisterBtn, SetClickRegisterBtn] = useState(false);
+
   const router = useRouter();
 
   const handleAddUser = (event) => {
@@ -26,6 +28,7 @@ const Register = () => {
     }
 
     try {
+      SetClickRegisterBtn(true);
       axiosHttp.post("/users", user).then((res) => {
         if (res.data.status) {
           toast.success("Registration successful.");
@@ -38,6 +41,7 @@ const Register = () => {
             address: "",
           });
           router.push("/auth/login");
+          SetClickRegisterBtn(false);
         } else {
           toast.error("Failed to register!");
         }
@@ -148,11 +152,11 @@ const Register = () => {
         </div>
 
         <div className="flex justify-center items-center gap-3 text-white text-lg font-semibold">
-          <button type="submit" className="bg-green-600 py-1 px-2 rounded-md">
-            Register
+          <button disabled={clickRegisterBtn} type="submit" className="bg-green-600 py-1 px-2 rounded-md">
+            {clickRegisterBtn ? "Registering..." : "Register"}
           </button>
           <span onClick={handleClear} className="bg-red-600 py-1 px-2 rounded-md hover:cursor-pointer">
-            Clear
+            Reset
           </span>
         </div>
       </form>

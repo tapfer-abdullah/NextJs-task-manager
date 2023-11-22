@@ -14,6 +14,7 @@ export const GET = async (request, { params }) => {
     // Accessing the 'name' parameter value
     const searchParams = new URLSearchParams(query);
     const emailValue = searchParams.get('email');
+    // console.log(searchParams, " ", emailValue)
 
     if (emailValue) {
         try {

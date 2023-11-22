@@ -14,6 +14,10 @@ export function middleware(request) {
         return
     }
 
+    if (request.nextUrl.pathname.startsWith("/api") && !authToken) {
+        return NextResponse.json({ message: "Access denied!", status: false }, { status: 401 });
+    }
+
     if (loggedInUserNotAccessiblePath) {
         if (authToken) {
             return NextResponse.redirect(new URL("/profile", request.url));
